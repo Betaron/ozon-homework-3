@@ -18,7 +18,7 @@ public sealed class Startup
     {
         _configuration = configuration;
     }
-    
+
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMvc()
@@ -29,7 +29,7 @@ public sealed class Startup
                 x.Filters.Add(new ResponseTypeAttribute((int)HttpStatusCode.BadRequest));
                 x.Filters.Add(new ProducesResponseTypeAttribute((int)HttpStatusCode.OK));
             });
-        
+
         services.Configure<PriceCalculatorOptions>(_configuration.GetSection("PriceCalculatorOptions"));
         services.AddControllers();
         services.AddEndpointsApiExplorer();
@@ -37,7 +37,7 @@ public sealed class Startup
         {
             o.CustomSchemaIds(x => x.FullName);
         });
-        
+
         services.AddScoped<IPriceCalculatorService, PriceCalculatorService>();
         services.AddScoped<IGoodPriceCalculatorService, GoodPriceCalculatorService>();
         services.AddHostedService<GoodsSyncHostedService>();

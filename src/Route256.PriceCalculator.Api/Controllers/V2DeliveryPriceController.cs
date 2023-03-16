@@ -23,7 +23,7 @@ public class V2DeliveryPriceController : Controller
         _logger = logger;
         _priceCalculatorService = priceCalculatorService;
     }
-    
+
     /// <summary>
     /// Метод расчета стоимости доставки на основе объема товаров
     /// или веса товара. Окончательная стоимость принимается как наибольшая
@@ -43,7 +43,7 @@ public class V2DeliveryPriceController : Controller
                     x.Width,
                     x.Weight))
                 .ToArray());
-        
+
         return new CalculateResponse(price);
     }
 }

@@ -11,7 +11,7 @@ public sealed class GoodsRepository : IGoodsRepository
     {
         if (_store.ContainsKey(entity.Id))
             _store.Remove(entity.Id);
-        
+
         _store.Add(entity.Id, entity);
     }
 

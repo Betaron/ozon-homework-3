@@ -8,7 +8,7 @@ using CalculateRequest = Route256.PriceCalculator.Api.Requests.V3.CalculateReque
 
 namespace Route256.PriceCalculator.Api.Controllers;
 
-public class V3DeliveryPriceController: Controller
+public class V3DeliveryPriceController : Controller
 {
     private readonly IGoodPriceCalculatorService _goodPriceCalculatorService;
     private readonly IPriceCalculatorService _priceCalculatorService;
@@ -38,7 +38,7 @@ public class V3DeliveryPriceController: Controller
 
         return new CalculateResponse(price);
     }
-    
+
     [HttpPost("good/calculate")]
     public Task<CalculateResponse> Calculate(GoodCalculateRequest request)
     {

@@ -18,7 +18,7 @@ public class V1DeliveryPriceController : ControllerBase
     {
         _priceCalculatorService = priceCalculatorService;
     }
-    
+
     /// <summary>
     /// Метод расчета стоимости доставки на основе объема товаров
     /// </summary>
@@ -35,10 +35,10 @@ public class V1DeliveryPriceController : ControllerBase
                     x.Width,
                     0 /* для v1 рассчет по весу не предусмотрен */))
                 .ToArray());
-        
+
         return new CalculateResponse(price);
     }
-    
+
     /// <summary>
     /// Метод получения истории вычисления
     /// </summary>

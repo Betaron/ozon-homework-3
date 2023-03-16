@@ -3,7 +3,7 @@ using Route256.PriceCalculator.Api.Dal.Repositories.Interfaces;
 
 namespace Route256.PriceCalculator.Api.HostedServices;
 
-public sealed class GoodsSyncHostedService: BackgroundService
+public sealed class GoodsSyncHostedService : BackgroundService
 {
     private readonly IGoodsRepository _repository;
     private readonly IServiceProvider _serviceProvider;
@@ -27,7 +27,7 @@ public sealed class GoodsSyncHostedService: BackgroundService
                 foreach (var good in goods)
                     _repository.AddOrUpdate(good);
             }
-            
+
             await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
         }
     }

@@ -18,7 +18,7 @@ public sealed class V1GoodsController
     {
         _repository = repository;
     }
-    
+
     [HttpGet]
     public ICollection<GoodEntity> GetAll()
     {
@@ -36,8 +36,8 @@ public sealed class V1GoodsController
             good.Length,
             good.Width,
             good.Weight);
-        
-        var price = priceCalculatorService.CalculatePrice(new []{ model });
+
+        var price = priceCalculatorService.CalculatePrice(new[] { model });
         return new CalculateResponse(price);
     }
 }

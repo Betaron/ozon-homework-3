@@ -27,12 +27,12 @@ public class PriceCalculatorServiceTests
         // Act, Assert
         Assert.Throws<ArgumentOutOfRangeException>(() => cut.CalculatePrice(goods));
     }
-    
+
     [Fact]
     public void PriceCalculatorService_WhenCalcAny_ShouldSave()
     {
         StorageEntity storageEntity = null;
-        
+
         // Arrange
         var options = new PriceCalculatorOptions { VolumeToPriceRatio = 1, WeightToPriceRatio = 1 };
         var repositoryMock = new Mock<IStorageRepository>(MockBehavior.Strict);
@@ -44,7 +44,7 @@ public class PriceCalculatorServiceTests
 
         // Act
         var result = cut.CalculatePrice(goods);
-        
+
         // Assert
         Assert.NotNull(storageEntity);
         repositoryMock.Verify(x => x.Save(It.IsAny<StorageEntity>()));
@@ -83,12 +83,12 @@ public class PriceCalculatorServiceTests
         repositoryMock.Setup(x => x.Save(It.IsAny<StorageEntity>()));
         return repositoryMock;
     }
-    
+
     private static IOptionsSnapshot<PriceCalculatorOptions> CreateOptionsSnapshot(
         PriceCalculatorOptions options)
     {
         var repositoryMock = new Mock<IOptionsSnapshot<PriceCalculatorOptions>>(MockBehavior.Strict);
-        
+
         repositoryMock
             .Setup(x => x.Value)
             .Returns(() => options);
@@ -105,11 +105,11 @@ public class PriceCalculatorServiceTests
         // Arrange
         var options = new PriceCalculatorOptions
         {
-            VolumeToPriceRatio = 1, 
+            VolumeToPriceRatio = 1,
         };
         var repositoryMock = CreateRepositoryMock();
         var cut = new PriceCalculatorService(CreateOptionsSnapshot(options), repositoryMock.Object);
-        
+
         // Act
         var result = cut.CalculatePrice(goods);
 
