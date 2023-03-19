@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Route256.PriceCalculator.Api.Responses.V2;
+using Route256.PriceCalculator.Api.Responses.V1;
 using Route256.PriceCalculator.Domain.Interfaces.Service;
 using Route256.PriceCalculator.Domain.Models;
 

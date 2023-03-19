@@ -6,6 +6,7 @@ using Route256.PriceCalculator.Domain.Models;
 
 namespace Route256.PriceCalculator.Api.Controllers;
 
+[ApiController]
 public class V3DeliveryPriceController : Controller
 {
     private readonly IGoodPriceCalculatorService _goodPriceCalculatorService;
@@ -20,8 +21,7 @@ public class V3DeliveryPriceController : Controller
     }
 
     [HttpPost("calculate")]
-    public CalculateResponse Calculate(
-        CalculateRequest request)
+    public CalculateResponse Calculate(CalculateRequest request)
     {
         var price = _deliveryPriceCalculatorService.CalculatePrice(
             request.Goods.Select(

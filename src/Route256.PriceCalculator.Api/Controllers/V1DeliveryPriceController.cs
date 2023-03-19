@@ -3,7 +3,6 @@ using Route256.PriceCalculator.Api.Requests.V1;
 using Route256.PriceCalculator.Api.Responses.V1;
 using Route256.PriceCalculator.Domain.Interfaces.Service;
 using Route256.PriceCalculator.Domain.Models;
-using CalculateRequest = Route256.PriceCalculator.Api.Requests.V1.CalculateRequest;
 
 namespace Route256.PriceCalculator.Api.Controllers;
 
