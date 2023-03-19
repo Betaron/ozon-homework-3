@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Route256.PriceCalculator.Api.Bll.Models.PriceCalculator;
-using Route256.PriceCalculator.Api.Bll.Services.Interfaces;
-using Route256.PriceCalculator.Api.Dal.Entities;
-using Route256.PriceCalculator.Api.Dal.Repositories.Interfaces;
 using Route256.PriceCalculator.Api.Responses.V2;
+using Route256.PriceCalculator.Domain.Interfaces.Service;
+using Route256.PriceCalculator.Domain.Models;
 
 namespace Route256.PriceCalculator.Api.Controllers;
 
@@ -11,33 +9,27 @@ namespace Route256.PriceCalculator.Api.Controllers;
 [ApiController]
 public sealed class V1GoodsController
 {
-    private readonly IGoodsRepository _repository;
+    private readonly IGoodsService _goodsService;
+    private readonly IGoodPriceCalculatorService _goodPriceCalculatorService;
 
     public V1GoodsController(
-        IGoodsRepository repository)
+        IGoodsService goodsService,
+        IGoodPriceCalculatorService goodPriceCalculatorService)
     {
-        _repository = repository;
+        _goodsService = goodsService;
+        _goodPriceCalculatorService = goodPriceCalculatorService;
     }
 
     [HttpGet]
-    public ICollection<GoodEntity> GetAll()
+    public ICollection<GoodModel> GetAll()
     {
-        return _repository.GetAll();
+        return _goodsService.GetAll().ToList();
     }
 
     [HttpGet("calculate/{id}")]
-    public CalculateResponse Calculate(
-        [FromServices] IPriceCalculatorService priceCalculatorService,
-        int id)
+    public CalculateResponse CalculateDelivery(int id)
     {
-        var good = _repository.Get(id);
-        var model = new GoodModel(
-            good.Height,
-            good.Length,
-            good.Width,
-            good.Weight);
-
-        var price = priceCalculatorService.CalculatePrice(new[] { model });
+        var price = _goodPriceCalculatorService.CalculatePrice(id);
         return new CalculateResponse(price);
     }
 }

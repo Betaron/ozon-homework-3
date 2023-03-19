@@ -1,9 +1,11 @@
-using Route256.PriceCalculator.Api.Bll.Services.Interfaces;
-using Route256.PriceCalculator.Api.Dal.Repositories.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Route256.PriceCalculator.Domain.Interfaces.Repository;
+using Route256.PriceCalculator.Domain.Interfaces.Service;
 
-namespace Route256.PriceCalculator.Api.HostedServices;
+namespace Route256.PriceCalculator.Infrastructure.HostedServices;
 
-public sealed class GoodsSyncHostedService : BackgroundService
+internal sealed class GoodsSyncHostedService : BackgroundService
 {
     private readonly IGoodsRepository _repository;
     private readonly IServiceProvider _serviceProvider;
@@ -23,7 +25,7 @@ public sealed class GoodsSyncHostedService : BackgroundService
             using (var scope = _serviceProvider.CreateScope())
             {
                 var goodsService = scope.ServiceProvider.GetRequiredService<IGoodsService>();
-                var goods = goodsService.GetGoods().ToList();
+                var goods = goodsService.GetGoodsWithRandomCount().ToList();
                 foreach (var good in goods)
                     _repository.AddOrUpdate(good);
             }
