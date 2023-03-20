@@ -99,13 +99,13 @@ public class PriceCalculatorServiceTests
     private static IOptionsSnapshot<PriceCalculatorOptions> CreateOptionsSnapshot(
         PriceCalculatorOptions options)
     {
-        var repositoryMock = new Mock<IOptionsSnapshot<PriceCalculatorOptions>>(MockBehavior.Strict);
+        var optionsMock = new Mock<IOptionsSnapshot<PriceCalculatorOptions>>(MockBehavior.Strict);
 
-        repositoryMock
+        optionsMock
             .Setup(x => x.Value)
             .Returns(() => options);
 
-        return repositoryMock.Object;
+        return optionsMock.Object;
     }
 
     [Theory]
