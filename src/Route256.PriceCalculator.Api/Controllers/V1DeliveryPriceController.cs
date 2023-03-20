@@ -41,7 +41,7 @@ public class V1DeliveryPriceController : ControllerBase
     /// <summary>
     /// Метод получения истории вычисления
     /// </summary>
-    /// <returns></returns>
+    /// <param name="request">Включает количество запрашиваемых записей</param>
     [HttpPost("get-history")]
     public GetHistoryResponse[] History(GetHistoryRequest request)
     {

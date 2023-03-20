@@ -24,7 +24,7 @@ public class V2DeliveryPriceController : Controller
     /// Метод расчета стоимости доставки на основе объема товаров
     /// или веса товара. Окончательная стоимость принимается как наибольшая
     /// </summary>
-    /// <returns></returns>
+    /// <param name="request">Включает в себя список товаров</param>
     [HttpPost("calculate")]
     public async Task<CalculateResponse> Calculate(CalculateRequest request)
     {

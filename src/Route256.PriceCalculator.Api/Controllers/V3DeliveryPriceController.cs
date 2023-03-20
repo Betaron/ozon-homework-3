@@ -20,6 +20,11 @@ public class V3DeliveryPriceController : Controller
         _deliveryPriceCalculatorService = deliveryPriceCalculatorService;
     }
 
+    /// <summary>
+    /// Метод расчета стоимости доставки на основе объема товаров
+    /// или веса товара. Окончательная стоимость принимается как наибольшая
+    /// </summary>
+    /// <param name="request">Включает в себя список товаров</param>
     [HttpPost("calculate")]
     public CalculateResponse Calculate(CalculateRequest request)
     {
@@ -36,6 +41,10 @@ public class V3DeliveryPriceController : Controller
         return new CalculateResponse(price);
     }
 
+    /// <summary>
+    /// Вычисляет стоимость доставки для товара с учетом расстояния.
+    /// </summary>
+    /// <param name="request">Включает товар и расстояние</param>
     [HttpPost("good/calculate")]
     public Task<CalculateResponse> Calculate(GoodCalculateRequest request)
     {

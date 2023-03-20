@@ -20,12 +20,19 @@ public sealed class V1GoodsController
         _goodPriceCalculatorService = goodPriceCalculatorService;
     }
 
+    /// <summary>
+    /// Получает информацию о каждом наименовании товара из репозитория
+    /// </summary>
     [HttpGet]
     public ICollection<GoodModel> GetAll()
     {
         return _goodsService.GetAll().ToList();
     }
 
+    /// <summary>
+    /// Вычисляет стоимость доставки для существующего наименования товара
+    /// </summary>
+    /// <param name="id">Идентификатор товара в репозитории товаров</param>
     [HttpGet("calculate/{id}")]
     public CalculateResponse CalculateDelivery(int id)
     {
