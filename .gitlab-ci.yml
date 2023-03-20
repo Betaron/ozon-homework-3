@@ -2,9 +2,10 @@ image: mcr.microsoft.com/dotnet/sdk:latest
 
 stages:
   - build
+  - test
 
 before_script:
-  - echo "starting build for %PROJECT_NAME%"
+  - echo "starting for %PROJECT_NAME%"
 
 build:
   stage: build
@@ -14,3 +15,8 @@ build:
     paths:
       - build
     expire_in: 1 week
+
+test:
+  stage: test
+  script:
+    - dotnet test
