@@ -1,0 +1,16 @@
+image: mcr.microsoft.com/dotnet/sdk:latest
+
+stages:
+  - build
+
+before_script:
+  - echo "starting build for %PROJECT_NAME%"
+
+build:
+  stage: build
+  script:
+    - dotnet build -o build
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 week
