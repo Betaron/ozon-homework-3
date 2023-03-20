@@ -21,10 +21,6 @@ internal sealed class GoodPriceCalculatorService : IGoodPriceCalculatorService
         if (goodId == default)
             throw new ArgumentException($"{nameof(goodId)} is default");
 
-        if (goodId == default)
-            throw new ArgumentException($"{nameof(goodId)} is default");
-
-
         var good = _goods.Get(goodId);
 
         return _deliveryPriceCalculatorService.CalculatePrice(good, distance);
