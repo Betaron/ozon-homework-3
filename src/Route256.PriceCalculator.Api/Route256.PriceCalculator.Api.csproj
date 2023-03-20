@@ -20,4 +20,9 @@
     <ProjectReference Include="..\Route256.PriceCalculator.Infrastructure\Route256.PriceCalculator.Infrastructure.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+  	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  	<NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
 </Project>
