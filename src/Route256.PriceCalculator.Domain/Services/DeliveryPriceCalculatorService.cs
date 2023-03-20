@@ -24,7 +24,7 @@ internal sealed class DeliveryPriceCalculatorService : IDeliveryPriceCalculatorS
         _deliveriesRepository = storageRepository;
     }
 
-    public decimal CalculatePrice(IReadOnlyList<GoodModel> goods, int distance)
+    public decimal CalculatePrice(IReadOnlyList<GoodModel> goods, int distance = 0)
     {
         if (!goods.Any())
         {
@@ -46,7 +46,7 @@ internal sealed class DeliveryPriceCalculatorService : IDeliveryPriceCalculatorS
         return resultPrice;
     }
 
-    public decimal CalculatePrice(GoodModel good, int distance) =>
+    public decimal CalculatePrice(GoodModel good, int distance = 0) =>
         CalculatePrice(new List<GoodModel>() { good }, distance);
 
     private decimal CalculatePriceByVolume(

@@ -1,6 +1,6 @@
 namespace Route256.PriceCalculator.Domain.Options;
 
-internal sealed class PriceCalculatorOptions
+public sealed class PriceCalculatorOptions
 {
     public decimal VolumeToPriceRatio { get; set; }
     public decimal WeightToPriceRatio { get; set; }
