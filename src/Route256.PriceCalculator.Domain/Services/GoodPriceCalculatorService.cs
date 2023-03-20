@@ -32,6 +32,7 @@ internal sealed class GoodPriceCalculatorService : IGoodPriceCalculatorService
 
         var good = _goods.Get(goodId);
 
-        return _deliveryPriceCalculatorService.CalculatePrice(good, distance);
+        //return _deliveryPriceCalculatorService.CalculatePrice(good, distance);
+        return 0;
     }
 }
