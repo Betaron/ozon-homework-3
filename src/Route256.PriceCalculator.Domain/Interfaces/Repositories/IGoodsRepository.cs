@@ -1,6 +1,6 @@
-namespace Route256.PriceCalculator.Domain.Interfaces.Repository;
-
 using Route256.PriceCalculator.Domain.Models;
+
+namespace Route256.PriceCalculator.Domain.Interfaces.Repositories;
 
 public interface IGoodsRepository
 {

@@ -1,4 +1,4 @@
-namespace Route256.PriceCalculator.Domain.Interfaces.Repository;
+namespace Route256.PriceCalculator.Domain.Interfaces.Repositories;
 
 using Route256.PriceCalculator.Domain.Models;
 

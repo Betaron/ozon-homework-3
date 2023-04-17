@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Route256.PriceCalculator.Domain.Interfaces.Repository;
-using Route256.PriceCalculator.Domain.Interfaces.Service;
+using Route256.PriceCalculator.Domain.Interfaces.Repositories;
+using Route256.PriceCalculator.Domain.Interfaces.Services;
 
 namespace Route256.PriceCalculator.Infrastructure.HostedServices;
 

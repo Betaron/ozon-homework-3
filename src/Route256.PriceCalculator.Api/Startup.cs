@@ -2,7 +2,7 @@ using System.Net;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Route256.PriceCalculator.Api.ActionFilters;
-using Route256.PriceCalculator.Infrastructure.Connectors;
+using Route256.PriceCalculator.Infrastructure.Extensions;
 
 namespace Route256.PriceCalculator.Api;
 
@@ -36,10 +36,9 @@ public sealed class Startup
             o.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
 
-        services.AddDomainServices();
-        services.AddRepositories();
-        services.AddHostedServices();
-        services.AddConfigurations(_configuration);
+        services
+            .AddDomainServices()
+            .AddInfrastructure(_configuration);
 
         services.AddHttpContextAccessor();
     }

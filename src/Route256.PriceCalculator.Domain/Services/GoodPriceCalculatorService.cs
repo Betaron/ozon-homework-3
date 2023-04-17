@@ -1,18 +1,18 @@
-using Route256.PriceCalculator.Domain.Interfaces.Repository;
-using Route256.PriceCalculator.Domain.Interfaces.Service;
+using Route256.PriceCalculator.Domain.Interfaces.Repositories;
+using Route256.PriceCalculator.Domain.Interfaces.Services;
 
 namespace Route256.PriceCalculator.Domain.Services;
 
 internal sealed class GoodPriceCalculatorService : IGoodPriceCalculatorService
 {
-    private readonly IGoodsRepository _goods;
+    private readonly IGoodsRepository _goodsRepository;
     private readonly IDeliveryPriceCalculatorService _deliveryPriceCalculatorService;
 
     public GoodPriceCalculatorService(
         IGoodsRepository goods,
         IDeliveryPriceCalculatorService deliveryPriceCalculatorService)
     {
-        _goods = goods;
+        _goodsRepository = goods;
         _deliveryPriceCalculatorService = deliveryPriceCalculatorService;
     }
 
@@ -23,14 +23,14 @@ internal sealed class GoodPriceCalculatorService : IGoodPriceCalculatorService
             throw new ArgumentException($"{nameof(goodId)} is default");
         }
 
-        if (!_goods.ContainsById(goodId))
+        if (!_goodsRepository.ContainsById(goodId))
         {
             throw new ArgumentOutOfRangeException(
                 nameof(goodId),
                 message: $"Good with id {goodId} does not exist");
         }
 
-        var good = _goods.Get(goodId);
+        var good = _goodsRepository.Get(goodId);
 
         return _deliveryPriceCalculatorService.CalculatePrice(good, distance);
     }

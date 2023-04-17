@@ -1,10 +1,10 @@
-using Route256.PriceCalculator.Domain.Interfaces.Repository;
+using Route256.PriceCalculator.Domain.Interfaces.Repositories;
 using Route256.PriceCalculator.Domain.Models;
 using Route256.PriceCalculator.Infrastructure.Entities;
 
 namespace Route256.PriceCalculator.Infrastructure.Repositories;
 
-public class DeliveriesRepository : IDeliveriesRepository
+internal sealed class DeliveriesRepository : IDeliveriesRepository
 {
     private readonly List<DeliveryEntity> _deliveries = new();
 

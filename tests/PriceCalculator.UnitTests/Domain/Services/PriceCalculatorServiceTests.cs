@@ -4,13 +4,13 @@ using System.Linq;
 using AutoFixture;
 using Microsoft.Extensions.Options;
 using Moq;
-using Route256.PriceCalculator.Domain.Interfaces.Repository;
+using Route256.PriceCalculator.Domain.Interfaces.Repositories;
 using Route256.PriceCalculator.Domain.Models;
 using Route256.PriceCalculator.Domain.Options;
 using Route256.PriceCalculator.Domain.Services;
 using Xunit;
 
-namespace Workshop.UnitTests;
+namespace PriceCalculator.UnitTests.Domain.Services;
 
 public class PriceCalculatorServiceTests
 {
