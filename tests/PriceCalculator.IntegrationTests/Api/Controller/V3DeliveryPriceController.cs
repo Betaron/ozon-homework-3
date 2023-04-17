@@ -46,9 +46,9 @@ public class V3DeliveryPriceController
         var httpContent = JsonContent.Create(requestBody);
 
         //Act
-        var responce = await httpClient.PostAsync("good/calculate", httpContent);
+        var response = await httpClient.PostAsync("good/calculate", httpContent);
 
         //Assert
-        Assert.Equal("InternalServerError", responce.StatusCode.ToString());
+        Assert.Equal(System.Net.HttpStatusCode.InternalServerError, response.StatusCode);
     }
 }
