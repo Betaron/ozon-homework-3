@@ -1,10 +1,10 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Route256.PriceCalculator.Api.Bll.Models.PriceCalculator;
-using Route256.PriceCalculator.Api.Bll.Services.Interfaces;
+using Route256.PriceCalculator.Api.Requests.V2;
 using Route256.PriceCalculator.Api.Responses.V2;
 using Route256.PriceCalculator.Api.Validators;
-using CalculateRequest = Route256.PriceCalculator.Api.Requests.V2.CalculateRequest;
+using Route256.PriceCalculator.Domain.Interfaces.Services;
+using Route256.PriceCalculator.Domain.Models;
 
 namespace Route256.PriceCalculator.Api.Controllers;
 
@@ -12,38 +12,34 @@ namespace Route256.PriceCalculator.Api.Controllers;
 [Route("/v2/[controller]")]
 public class V2DeliveryPriceController : Controller
 {
-    private readonly ILogger<V2DeliveryPriceController> _logger;
-    private readonly IPriceCalculatorService _priceCalculatorService;
+    private readonly IDeliveryPriceCalculatorService _deliveryPriceCalculatorService;
 
     public V2DeliveryPriceController(
-        ILogger<V2DeliveryPriceController> logger,
-        IHttpContextAccessor httpContextAccessor,
-        IPriceCalculatorService priceCalculatorService)
+        IDeliveryPriceCalculatorService deliveryPriceCalculatorService)
     {
-        _logger = logger;
-        _priceCalculatorService = priceCalculatorService;
+        _deliveryPriceCalculatorService = deliveryPriceCalculatorService;
     }
-    
+
     /// <summary>
     /// Метод расчета стоимости доставки на основе объема товаров
     /// или веса товара. Окончательная стоимость принимается как наибольшая
     /// </summary>
-    /// <returns></returns>
+    /// <param name="request">Включает в себя список товаров</param>
     [HttpPost("calculate")]
     public async Task<CalculateResponse> Calculate(CalculateRequest request)
     {
         var validator = new CalculateRequestValidator();
         await validator.ValidateAndThrowAsync(request);
 
-        var price = _priceCalculatorService.CalculatePrice(
+        var price = _deliveryPriceCalculatorService.CalculatePrice(
             request.Goods
                 .Select(x => new GoodModel(
-                    x.Height,
-                    x.Length,
-                    x.Width,
-                    x.Weight))
+                    Height: x.Height,
+                    Length: x.Length,
+                    Width: x.Width,
+                    Weight: x.Weight))
                 .ToArray());
-        
+
         return new CalculateResponse(price);
     }
 }

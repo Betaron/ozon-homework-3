@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Route256.PriceCalculator.Api.Bll.Models.PriceCalculator;
-using Route256.PriceCalculator.Api.Bll.Services.Interfaces;
 using Route256.PriceCalculator.Api.Requests.V1;
 using Route256.PriceCalculator.Api.Responses.V1;
-using CalculateRequest = Route256.PriceCalculator.Api.Requests.V1.CalculateRequest;
+using Route256.PriceCalculator.Domain.Interfaces.Services;
+using Route256.PriceCalculator.Domain.Models;
 
 namespace Route256.PriceCalculator.Api.Controllers;
 
@@ -11,14 +10,15 @@ namespace Route256.PriceCalculator.Api.Controllers;
 [Route("/v1/[controller]")]
 public class V1DeliveryPriceController : ControllerBase
 {
-    private readonly IPriceCalculatorService _priceCalculatorService;
+    private readonly IDeliveryPriceCalculatorService _deliveryPriceCalculatorService;
 
     public V1DeliveryPriceController(
-        IPriceCalculatorService priceCalculatorService)
+        IDeliveryPriceCalculatorService deliveryPriceCalculatorService)
     {
-        _priceCalculatorService = priceCalculatorService;
+        _deliveryPriceCalculatorService = deliveryPriceCalculatorService;
     }
-    
+
+
     /// <summary>
     /// Метод расчета стоимости доставки на основе объема товаров
     /// </summary>
@@ -27,26 +27,25 @@ public class V1DeliveryPriceController : ControllerBase
     public CalculateResponse Calculate(
         CalculateRequest request)
     {
-        var price = _priceCalculatorService.CalculatePrice(
+        var price = _deliveryPriceCalculatorService.CalculatePrice(
             request.Goods
                 .Select(x => new GoodModel(
-                    x.Height,
-                    x.Length,
-                    x.Width,
-                    0 /* для v1 рассчет по весу не предусмотрен */))
+                    Height: x.Height,
+                    Length: x.Length,
+                    Width: x.Width))
                 .ToArray());
-        
+
         return new CalculateResponse(price);
     }
-    
+
     /// <summary>
     /// Метод получения истории вычисления
     /// </summary>
-    /// <returns></returns>
+    /// <param name="request">Включает количество запрашиваемых записей</param>
     [HttpPost("get-history")]
     public GetHistoryResponse[] History(GetHistoryRequest request)
     {
-        var log = _priceCalculatorService.QueryLog(request.Take);
+        var log = _deliveryPriceCalculatorService.QueryLog(request.Take);
 
         return log
             .Select(x => new GetHistoryResponse(

@@ -1,50 +1,55 @@
 using Microsoft.AspNetCore.Mvc;
-using Route256.PriceCalculator.Api.Bll.Models.PriceCalculator;
-using Route256.PriceCalculator.Api.Bll.Services;
-using Route256.PriceCalculator.Api.Bll.Services.Interfaces;
 using Route256.PriceCalculator.Api.Requests.V3;
 using Route256.PriceCalculator.Api.Responses.V3;
-using CalculateRequest = Route256.PriceCalculator.Api.Requests.V3.CalculateRequest;
+using Route256.PriceCalculator.Domain.Interfaces.Services;
+using Route256.PriceCalculator.Domain.Models;
 
 namespace Route256.PriceCalculator.Api.Controllers;
 
-public class V3DeliveryPriceController: Controller
+[ApiController]
+public class V3DeliveryPriceController : Controller
 {
     private readonly IGoodPriceCalculatorService _goodPriceCalculatorService;
-    private readonly IPriceCalculatorService _priceCalculatorService;
+    private readonly IDeliveryPriceCalculatorService _deliveryPriceCalculatorService;
 
     public V3DeliveryPriceController(
         IGoodPriceCalculatorService goodPriceCalculatorService,
-        IPriceCalculatorService priceCalculatorService)
+        IDeliveryPriceCalculatorService deliveryPriceCalculatorService)
     {
         _goodPriceCalculatorService = goodPriceCalculatorService;
-        _priceCalculatorService = priceCalculatorService;
+        _deliveryPriceCalculatorService = deliveryPriceCalculatorService;
     }
 
+    /// <summary>
+    /// Метод расчета стоимости доставки на основе объема товаров
+    /// или веса товара. Окончательная стоимость принимается как наибольшая
+    /// </summary>
+    /// <param name="request">Включает в себя список товаров</param>
     [HttpPost("calculate")]
-    public CalculateResponse Calculate(
-        CalculateRequest request)
+    public CalculateResponse Calculate(CalculateRequest request)
     {
-        var price = _priceCalculatorService.CalculatePrice(
-            new Bll.Models.PriceCalculator.CalculateRequest(
-                request.Goods
-                    .Select(x => new GoodModel(
-                        x.Height,
-                        x.Length,
-                        x.Width,
-                        x.Weight))
-                    .ToArray(),
-                request.Distance));
+        var price = _deliveryPriceCalculatorService.CalculatePrice(
+            request.Goods.Select(
+                x => new GoodModel(
+                    Height: x.Height,
+                    Length: x.Length,
+                    Width: x.Width,
+                    Weight: x.Weight
+                )).ToList(),
+            (int)request.Distance);
 
         return new CalculateResponse(price);
     }
-    
+
+    /// <summary>
+    /// Вычисляет стоимость доставки для товара с учетом расстояния.
+    /// </summary>
+    /// <param name="request">Включает товар и расстояние</param>
     [HttpPost("good/calculate")]
     public Task<CalculateResponse> Calculate(GoodCalculateRequest request)
     {
-        var price = _goodPriceCalculatorService.сalculatePrice(request.GoodId, request.Distance);
+        var price = _goodPriceCalculatorService.CalculatePrice(request.GoodId, (int)request.Distance);
 
         return Task.FromResult(new CalculateResponse(price));
     }
-
 }
