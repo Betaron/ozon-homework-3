@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Route256.PriceCalculator.Api.Requests.V2;
 using Route256.PriceCalculator.Api.Responses.V2;
 using Route256.PriceCalculator.Api.Validators;
-using Route256.PriceCalculator.Domain.Interfaces.Service;
+using Route256.PriceCalculator.Domain.Interfaces.Services;
 using Route256.PriceCalculator.Domain.Models;
 
 namespace Route256.PriceCalculator.Api.Controllers;
